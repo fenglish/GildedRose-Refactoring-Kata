@@ -8,7 +8,14 @@ describe GildedRose do
     GildedRose.new( items ).update_quality()
     expect( items[0].quality ).to eq 3
   end
+  
   # The Quality of an item is never negative
+  it "should not degrades item's quality more than 0" do
+    items = [ Item.new("Normal item", 0, 0) ]
+    GildedRose.new( items ).update_quality()
+    expect( items[0].quality ).to eq 0
+  end
+
   # “Aged Brie” actually increases in Quality the older it gets
   # The Quality of an item is never more than 50
   # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
