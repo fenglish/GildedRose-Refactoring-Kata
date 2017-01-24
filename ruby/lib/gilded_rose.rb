@@ -7,6 +7,17 @@ class GildedRose
   def update_quality()
     @items.each do |item|
       case item.name
+      when "Backstage passes to a TAFKAL80ETC concert" then
+        if item.sell_in == 0
+          item.quality = 0
+        elsif item.sell_in <= 5
+          item.quality += 3 if item.quality < 50
+        elsif item.sell_in <= 10
+          item.quality += 2 if item.quality < 50
+        else
+          item.quality -= 1
+        end
+        item.sell_in -= 1
       when "Sulfuras, Hand of Ragnaros" then
         # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
       when "Aged Brie" then
