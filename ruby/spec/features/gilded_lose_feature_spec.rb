@@ -38,7 +38,27 @@ describe GildedRose, "features" do
     expect( items[0].quality ).to eq 5
   end
 
-  # “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches; Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
+  # “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches;
+  # Quality increases by 2 when there are 10 days or less
+  # and by 3 when there are 5 days or less but Quality drops to 0 after the concert
+  context "Backstage passes" do
+    it "should increase quality by 2 when there are 10 days or less" do
+      items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 7
+    end
+    it "should increase quality by 3 when there are 5 days or less" do
+      items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 8
+    end
+    it "should drop quality to 0 by 3 after the concert" do
+      items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 0
+    end
+  end
+
   #
   # We have recently signed a supplier of conjured items. This requires an update to our system:
   # “Conjured” items degrade in Quality twice as fast as normal items
