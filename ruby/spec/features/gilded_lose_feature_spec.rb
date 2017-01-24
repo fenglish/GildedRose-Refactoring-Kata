@@ -8,15 +8,21 @@ describe GildedRose do
     GildedRose.new( items ).update_quality()
     expect( items[0].quality ).to eq 3
   end
-  
+
   # The Quality of an item is never negative
   it "should not degrades item's quality more than 0" do
-    items = [ Item.new("Normal item", 0, 0) ]
+    items = [ Item.new("Normal item", 5, 0) ]
     GildedRose.new( items ).update_quality()
     expect( items[0].quality ).to eq 0
   end
 
   # “Aged Brie” actually increases in Quality the older it gets
+  it "should increase Aged Brie's quality older it gets" do
+    items = [ Item.new("Aged Brie", 5, 5) ]
+    GildedRose.new( items ).update_quality()
+    expect( items[0].quality ).to eq 6
+  end
+
   # The Quality of an item is never more than 50
   # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
   # “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches; Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
