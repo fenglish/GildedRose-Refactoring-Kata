@@ -6,8 +6,15 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      item.quality -= 1 if item.quality > 0 && item.sell_in > 0
-      item.quality -= 2 if item.quality > 0 && item.sell_in == 0
+      case item.name
+      when "Aged Brie" then
+        item.quality += 1 if item.quality < 50
+        item.sell_in -= 1
+      else
+        item.quality -= 1 if item.quality > 0 && item.sell_in > 0
+        item.quality -= 2 if item.quality > 0 && item.sell_in == 0
+        item.sell_in -= 1
+      end
     end
   end
 

@@ -9,30 +9,34 @@ describe GildedRose, "features" do
       items = [ Item.new("Normal item", 0, 5) ]
       GildedRose.new( items ).update_quality()
       expect( items[0].quality ).to eq 3
+      expect( items[0].sell_in ).to eq -1
     end
     # The Quality of an item is never negative
     it "should not degrade item's quality more than 0" do
       items = [ Item.new("Normal item", 5, 0) ]
       GildedRose.new( items ).update_quality()
       expect( items[0].quality ).to eq 0
+      expect( items[0].sell_in ).to eq 4
     end
   end
-  #
-  # context "Aged Brie" do
-  #   # “Aged Brie” actually increases in Quality the older it gets
-  #   it "should increase Aged Brie's quality older it gets" do
-  #     items = [ Item.new("Aged Brie", 5, 5) ]
-  #     GildedRose.new( items ).update_quality()
-  #     expect( items[0].quality ).to eq 6
-  #   end
-  #   # The Quality of an item is never more than 50
-  #   it "should not increase the quality more than 50" do
-  #     items = [ Item.new("Aged Brie", 5, 50) ]
-  #     GildedRose.new( items ).update_quality()
-  #     expect( items[0].quality ).to eq 50
-  #   end
-  # end
-  #
+
+  context "Aged Brie" do
+    # “Aged Brie” actually increases in Quality the older it gets
+    it "should increase Aged Brie's quality older it gets" do
+      items = [ Item.new("Aged Brie", 5, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 6
+      expect( items[0].sell_in ).to eq 4
+    end
+    # The Quality of an item is never more than 50
+    it "should not increase the quality more than 50" do
+      items = [ Item.new("Aged Brie", 5, 50) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 50
+      expect( items[0].sell_in ).to eq 4
+    end
+  end
+
   # context "Sulfuras" do
   #   # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
   #   it "should not change Sulfuras' quality and sell_in" do
@@ -52,12 +56,14 @@ describe GildedRose, "features" do
   #       items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 5) ]
   #       GildedRose.new( items ).update_quality()
   #       expect( items[0].quality ).to eq 7
+  #       expect( items[0].sell_in ).to eq 9
   #     end
   #     # The Quality of an item is never more than 50
   #     it "should not increase the quality more than 50" do
   #       items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 50) ]
   #       GildedRose.new( items ).update_quality()
   #       expect( items[0].quality ).to eq 50
+  #       expect( items[0].sell_in ).to eq 9
   #     end
   #   end
   #
@@ -66,12 +72,14 @@ describe GildedRose, "features" do
   #       items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 5) ]
   #       GildedRose.new( items ).update_quality()
   #       expect( items[0].quality ).to eq 8
+  #       expect( items[0].sell_in ).to eq 4
   #     end
   #     # The Quality of an item is never more than 50
   #     it "should not increase the quality more than 50" do
   #       items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 50) ]
   #       GildedRose.new( items ).update_quality()
   #       expect( items[0].quality ).to eq 50
+  #       expect( items[0].sell_in ).to eq 4
   #     end
   #   end
   #   context "after the concert" do
@@ -79,6 +87,7 @@ describe GildedRose, "features" do
   #       items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 5) ]
   #       GildedRose.new( items ).update_quality()
   #       expect( items[0].quality ).to eq 0
+  #       expect( items[0].sell_in ).to eq -1
   #     end
   #   end
   #
