@@ -17,21 +17,23 @@ class GildedRose
         else
           item.quality -= 1
         end
-        item.sell_in -= 1
       when "Sulfuras, Hand of Ragnaros" then
         # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
       when "Aged Brie" then
         item.quality += 1 if quality_over_50?(item)
-        item.sell_in -= 1
       else
         item.quality -= 1 if item.quality > 0 && item.sell_in > 0
         item.quality -= 2 if item.quality > 0 && item.sell_in == 0
-        item.sell_in -= 1
       end
+      decrease_sell_in(item)
     end
   end
 
   private
+
+  def decrease_sell_in(item)
+    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
+  end
 
   def quality_over_50?(item)
     item.quality < 50
