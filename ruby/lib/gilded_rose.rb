@@ -7,6 +7,8 @@ class GildedRose
   def update_quality()
     @items.each do |item|
       case item.name
+      when "Sulfuras, Hand of Ragnaros" then
+        # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
       when "Aged Brie" then
         item.quality += 1 if item.quality < 50
         item.sell_in -= 1

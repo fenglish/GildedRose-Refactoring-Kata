@@ -37,16 +37,16 @@ describe GildedRose, "features" do
     end
   end
 
-  # context "Sulfuras" do
-  #   # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
-  #   it "should not change Sulfuras' quality and sell_in" do
-  #     items = [ Item.new("Sulfuras, Hand of Ragnaros", 5, 5) ]
-  #     GildedRose.new( items ).update_quality()
-  #     expect( items[0].sell_in ).to eq 5
-  #     expect( items[0].quality ).to eq 5
-  #   end
-  # end
-  #
+  context "Sulfuras" do
+    # “Sulfuras”, being a legendary item, never has to be sold or decreases in Quality
+    it "should not change Sulfuras' quality and sell_in" do
+      items = [ Item.new("Sulfuras, Hand of Ragnaros", 5, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].sell_in ).to eq 5
+      expect( items[0].quality ).to eq 5
+    end
+  end
+  
   # context "Backstage passes" do
   #   # “Backstage passes”, like aged brie, increases in Quality as it’s SellIn value approaches;
   #   # Quality increases by 2 when there are 10 days or less
