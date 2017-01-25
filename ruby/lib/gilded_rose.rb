@@ -16,11 +16,10 @@ class GildedRose
   private
 
   def take_different_process_by_name
-    case @item.name
-    when "Backstage passes to a TAFKAL80ETC concert" then process_for_backstage_passes
-    when "Sulfuras, Hand of Ragnaros"                then process_for_sulfuras
-    when "Aged Brie"                                 then process_for_aged_brie
-    when "Conjured"                                  then process_for_conjured
+    if    @item.name.include?("Backstage passes") then process_for_backstage_passes
+    elsif @item.name.include?("Sulfuras")         then process_for_sulfuras_item
+    elsif @item.name.include?("Aged Brie")        then process_for_aged_brie
+    elsif @item.name.include?("Conjured")         then process_for_conjured_item
     else process_for_normal_item end
   end
 
@@ -35,7 +34,7 @@ class GildedRose
     else  degrade_quality_by(1) end
   end
 
-  def process_for_sulfuras
+  def process_for_sulfuras_item
     # “Sulfuras”, being a legendary item, never has to decrease in Quality
   end
 
@@ -49,7 +48,7 @@ class GildedRose
     degrade_quality_by(1)
   end
 
-  def process_for_conjured
+  def process_for_conjured_item
     degrade_quality_by(2) if out_of_date?
     degrade_quality_by(2)
   end
