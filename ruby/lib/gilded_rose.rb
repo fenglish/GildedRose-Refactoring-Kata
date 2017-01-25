@@ -46,8 +46,8 @@ class GildedRose
   end
 
   def process_for_normal_item(item)
-    item.quality -= 1 if item.sell_in > 0
-    item.quality -= 2 if item.sell_in == 0
+    return item.quality -= 2 if item.sell_in <= 0
+    item.quality -= 1
   end
 
   def quality_under_50?(item)
