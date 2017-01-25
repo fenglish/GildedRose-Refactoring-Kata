@@ -20,6 +20,7 @@ class GildedRose
     when "Backstage passes to a TAFKAL80ETC concert" then process_for_backstage_passes
     when "Sulfuras, Hand of Ragnaros"                then process_for_sulfuras
     when "Aged Brie"                                 then process_for_aged_brie
+    when "Conjured"                                  then process_for_conjured
     else process_for_normal_item end
   end
 
@@ -46,6 +47,11 @@ class GildedRose
   def process_for_normal_item
     degrade_quality_by(1) if out_of_date?
     degrade_quality_by(1)
+  end
+
+  def process_for_conjured
+    degrade_quality_by(2) if out_of_date?
+    degrade_quality_by(2)
   end
 
   def quality_more_than_0?
