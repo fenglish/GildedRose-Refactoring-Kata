@@ -24,7 +24,7 @@ class GildedRose
   end
 
   def decrease_sell_in
-    @item.sell_in -= 1 if @item.name != "Sulfuras, Hand of Ragnaros"
+    @item.sell_in -= 1 if !@item.name.include?("Sulfuras")
   end
 
   def process_for_backstage_passes
