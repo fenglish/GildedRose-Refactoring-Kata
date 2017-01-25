@@ -26,7 +26,7 @@ class GildedRose
     item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
   end
 
-  def quality_over_50?(item)
+  def quality_under_50?(item)
     item.quality < 50
   end
 
@@ -34,16 +34,16 @@ class GildedRose
     if item.sell_in == 0 then
       item.quality = 0
     elsif item.sell_in <= 5
-      item.quality += 3 if quality_over_50?(item)
+      item.quality += 3 if quality_under_50?(item)
     elsif item.sell_in <= 10
-      item.quality += 2 if quality_over_50?(item)
+      item.quality += 2 if quality_under_50?(item)
     else
       item.quality -= 1
     end
   end
 
   def process_for_aged_brie(item)
-    item.quality += 1 if quality_over_50?(item)
+    item.quality += 1 if quality_under_50?(item)
   end
 
   def process_for_normal_item(item)
