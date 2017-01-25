@@ -26,15 +26,10 @@ class GildedRose
   end
 
   def process_for_backstage_passes(item)
-    if item.sell_in == 0 then
-      item.quality = 0
-    elsif item.sell_in <= 5
-      item.quality += 3 if quality_under_50?(item)
-    elsif item.sell_in <= 10
-      item.quality += 2 if quality_under_50?(item)
-    else
-      item.quality -= 1
-    end
+    if    item.sell_in == 0  then item.quality = 0
+    elsif item.sell_in <= 5  then increase_quality( 3, item )
+    elsif item.sell_in <= 10 then increase_quality( 2, item )
+    else  item.quality -= 1  end
   end
 
   def process_for_sulfuras
@@ -42,7 +37,7 @@ class GildedRose
   end
 
   def process_for_aged_brie(item)
-    item.quality += 1 if quality_under_50?(item)
+    increase_quality( 1, item )
   end
 
   def process_for_normal_item(item)
@@ -52,6 +47,10 @@ class GildedRose
 
   def quality_under_50?(item)
     item.quality < 50
+  end
+
+  def increase_quality(number,item)
+    item.quality += number if quality_under_50?(item)
   end
 
   # def update_quality()
