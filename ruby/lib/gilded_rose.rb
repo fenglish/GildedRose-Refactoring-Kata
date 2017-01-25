@@ -2,7 +2,7 @@ class GildedRose
 
   def initialize(items)
     @items = items
-    @item = nil
+    @item  = nil
   end
 
   def update_quality()
@@ -29,9 +29,9 @@ class GildedRose
 
   def process_for_backstage_passes
     if    @item.sell_in <= 0  then @item.quality = 0
-    elsif @item.sell_in <= 5  then increase_quality( 3 )
-    elsif @item.sell_in <= 10 then increase_quality( 2 )
-    else  degrade_quality( 1 ) end
+    elsif @item.sell_in <= 5  then increase_quality_by(3)
+    elsif @item.sell_in <= 10 then increase_quality_by(2)
+    else  degrade_quality_by(1) end
   end
 
   def process_for_sulfuras
@@ -39,23 +39,24 @@ class GildedRose
   end
 
   def process_for_aged_brie
-    increase_quality( 1 )
+    return increase_quality_by(2) if @item.sell_in <= 0
+    increase_quality_by(1)
   end
 
   def process_for_normal_item
-    return degrade_quality( 2 ) if @item.sell_in <= 0
-    degrade_quality( 1 )
+    return degrade_quality_by(2) if @item.sell_in <= 0
+    degrade_quality_by(1)
   end
 
   def quality_under_50?
     @item.quality < 50
   end
 
-  def increase_quality( number )
+  def increase_quality_by( number )
     @item.quality += number if quality_under_50?
   end
 
-  def degrade_quality( number )
+  def degrade_quality_by( number )
     @item.quality -= number if @item.quality > 0
   end
 

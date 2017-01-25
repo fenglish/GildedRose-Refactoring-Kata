@@ -5,6 +5,13 @@ describe GildedRose, "features" do
 
   context "Normal items" do
     # Once the sell by date has passed, Quality degrades twice as fast
+    it "should degrades item's quality by 1" do
+      items = [ Item.new("Normal item", 5, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 4
+      expect( items[0].sell_in ).to eq 4
+    end
+    # Once the sell by date has passed, Quality degrades twice as fast
     it "should degrades item's quality twice as fast, once the sell by date has passed" do
       items = [ Item.new("Normal item", 0, 5) ]
       GildedRose.new( items ).update_quality()
@@ -27,6 +34,11 @@ describe GildedRose, "features" do
       GildedRose.new( items ).update_quality()
       expect( items[0].quality ).to eq 6
       expect( items[0].sell_in ).to eq 4
+      # edge case
+      items = [ Item.new("Aged Brie", 5, -3) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq -2
+      expect( items[0].sell_in ).to eq 4
     end
     # The Quality of an item is never more than 50
     it "should not increase the quality more than 50" do
@@ -35,12 +47,12 @@ describe GildedRose, "features" do
       expect( items[0].quality ).to eq 50
       expect( items[0].sell_in ).to eq 4
     end
-    # The Quality of an item is never negative
-    it "should increase the quality when the quality minus(edge case)" do
-      items = [ Item.new("Aged Brie", 5, -3) ]
+    # Once the sell by date has passed, Quality degrades twice as fast
+    it "should increse item's quality twice as fast, once the sell by date has passed" do
+      items = [ Item.new("Aged Brie", 0, 5) ]
       GildedRose.new( items ).update_quality()
-      expect( items[0].quality ).to eq -2
-      expect( items[0].sell_in ).to eq 4
+      expect( items[0].quality ).to eq 7
+      expect( items[0].sell_in ).to eq -1
     end
   end
 
