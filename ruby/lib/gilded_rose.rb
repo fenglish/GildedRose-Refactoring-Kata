@@ -28,9 +28,9 @@ class GildedRose
   end
 
   def process_for_backstage_passes
-    if    @item.sell_in <= 0  then @item.quality = 0
-    elsif @item.sell_in <= 5  then increase_quality_by(3)
-    elsif @item.sell_in <= 10 then increase_quality_by(2)
+    if    out_of_date?      then @item.quality = 0
+    elsif less_than_5days?  then increase_quality_by(3)
+    elsif less_than_10days? then increase_quality_by(2)
     else  degrade_quality_by(1) end
   end
 
@@ -39,13 +39,17 @@ class GildedRose
   end
 
   def process_for_aged_brie
-    return increase_quality_by(2) if @item.sell_in <= 0
+    increase_quality_by(1) if out_of_date?
     increase_quality_by(1)
   end
 
   def process_for_normal_item
-    return degrade_quality_by(2) if @item.sell_in <= 0
+    degrade_quality_by(1) if out_of_date?
     degrade_quality_by(1)
+  end
+
+  def quality_more_than_0?
+    @item.quality > 0
   end
 
   def quality_under_50?
@@ -57,7 +61,19 @@ class GildedRose
   end
 
   def degrade_quality_by( number )
-    @item.quality -= number if @item.quality > 0
+    @item.quality -= number if quality_more_than_0?
+  end
+
+  def out_of_date?
+    @item.sell_in <= 0
+  end
+
+  def less_than_5days?
+    @item.sell_in <= 5
+  end
+
+  def less_than_10days?
+    @item.sell_in <= 10
   end
 
   # def update_quality()
