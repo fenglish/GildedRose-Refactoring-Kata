@@ -20,7 +20,7 @@ describe GildedRose, "features" do
       expect( items[0].sell_in ).to eq -1
     end
     # The Quality of an item is never negative
-    it "should not degrade item's quality more than 0" do
+    it "should not degrade item's quality less than 0" do
       items = [ Item.new("Normal item", 5, 0) ]
       GildedRose.new( items ).update_quality()
       expect( items[0].quality ).to eq 0
@@ -110,7 +110,7 @@ describe GildedRose, "features" do
         expect( items[0].sell_in ).to eq -1
       end
       # Once the sell by date has passed, Quality degrades twice as fast
-      it "should not degrades item's quality more than 0" do
+      it "should not degrades item's quality less than 0" do
         items = [ Item.new("Backstage passes to a TAFKAL80ETC concert", -1, 0) ]
         GildedRose.new( items ).update_quality()
         expect( items[0].quality ).to eq 0
