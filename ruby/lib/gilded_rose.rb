@@ -6,15 +6,8 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      case item.name
-      when "Backstage passes to a TAFKAL80ETC concert" then
-        process_for_backstage_passes(item)
-      when "Sulfuras, Hand of Ragnaros" then
-        # “Sulfuras”, being a legendary item, never has to decrease in Quality
-      when "Aged Brie" then
-        process_for_aged_brie(item)
-      else
-        process_for_normal_item(item)
+      if item.quality > 0
+        take_different_process_by_item_name(item)
       end
       decrease_sell_in(item)
     end
@@ -22,12 +15,16 @@ class GildedRose
 
   private
 
-  def decrease_sell_in(item)
-    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
+  def take_different_process_by_item_name(item)
+    case item.name
+    when "Backstage passes to a TAFKAL80ETC concert" then process_for_backstage_passes(item)
+    when "Sulfuras, Hand of Ragnaros"                then process_for_sulfuras
+    when "Aged Brie"                                 then process_for_aged_brie(item)
+    else process_for_normal_item(item) end
   end
 
-  def quality_under_50?(item)
-    item.quality < 50
+  def decrease_sell_in(item)
+    item.sell_in -= 1 if item.name != "Sulfuras, Hand of Ragnaros"
   end
 
   def process_for_backstage_passes(item)
@@ -42,13 +39,21 @@ class GildedRose
     end
   end
 
+  def process_for_sulfuras
+    # “Sulfuras”, being a legendary item, never has to decrease in Quality
+  end
+
   def process_for_aged_brie(item)
     item.quality += 1 if quality_under_50?(item)
   end
 
   def process_for_normal_item(item)
-    item.quality -= 1 if item.quality > 0 && item.sell_in > 0
-    item.quality -= 2 if item.quality > 0 && item.sell_in == 0
+    item.quality -= 1 if item.sell_in > 0
+    item.quality -= 2 if item.sell_in == 0
+  end
+
+  def quality_under_50?(item)
+    item.quality < 50
   end
 
   # def update_quality()
