@@ -6,7 +6,7 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      take_different_process_by_item_name(item) if item.quality > 0
+      take_different_process_by_item_name(item)
       decrease_sell_in(item)
     end
   end
@@ -26,10 +26,10 @@ class GildedRose
   end
 
   def process_for_backstage_passes(item)
-    if    item.sell_in == 0  then item.quality = 0
+    if    item.sell_in <= 0  then item.quality = 0
     elsif item.sell_in <= 5  then increase_quality( 3, item )
     elsif item.sell_in <= 10 then increase_quality( 2, item )
-    else  item.quality -= 1  end
+    else  degrade_quality(1,item) end
   end
 
   def process_for_sulfuras
@@ -41,8 +41,8 @@ class GildedRose
   end
 
   def process_for_normal_item(item)
-    return item.quality -= 2 if item.sell_in <= 0
-    item.quality -= 1
+    return degrade_quality(2,item) if item.sell_in <= 0
+    degrade_quality(1,item)
   end
 
   def quality_under_50?(item)
@@ -51,6 +51,10 @@ class GildedRose
 
   def increase_quality(number,item)
     item.quality += number if quality_under_50?(item)
+  end
+
+  def degrade_quality(number,item)
+    item.quality -= number if item.quality > 0
   end
 
   # def update_quality()
