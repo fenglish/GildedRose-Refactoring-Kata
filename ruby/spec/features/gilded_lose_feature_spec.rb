@@ -121,4 +121,27 @@ describe GildedRose, "features" do
 
   # We have recently signed a supplier of conjured items. This requires an update to our system:
   # “Conjured” items degrade in Quality twice as fast as normal items
+  context "Conjured" do
+    # Once the sell by date has passed, Quality degrades twice as fast
+    it "should degrades item's quality by 2" do
+      items = [ Item.new("Conjured", 5, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 3
+      expect( items[0].sell_in ).to eq 4
+    end
+    # Once the sell by date has passed, Quality degrades twice as fast
+    it "should degrades item's quality twice as fast, once the sell by date has passed" do
+      items = [ Item.new("Conjured", 0, 5) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 1
+      expect( items[0].sell_in ).to eq -1
+    end
+    # The Quality of an item is never negative
+    it "should not degrade item's quality more than 0" do
+      items = [ Item.new("Conjured", 5, 0) ]
+      GildedRose.new( items ).update_quality()
+      expect( items[0].quality ).to eq 0
+      expect( items[0].sell_in ).to eq 4
+    end
+  end
 end
