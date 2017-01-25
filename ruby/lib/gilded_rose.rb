@@ -6,9 +6,7 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      if item.quality > 0
-        take_different_process_by_item_name(item)
-      end
+      take_different_process_by_item_name(item) if item.quality > 0
       decrease_sell_in(item)
     end
   end
