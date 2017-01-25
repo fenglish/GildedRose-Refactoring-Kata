@@ -24,7 +24,7 @@ class GildedRose
   end
 
   def decrease_sell_in
-    @item.sell_in -= 1 if !@item.name.include?("Sulfuras")
+    @item.sell_in -= 1 if not_sulfuras_item?
   end
 
   def process_for_backstage_passes
@@ -79,6 +79,10 @@ class GildedRose
 
   def less_than_10days?
     @item.sell_in <= 10
+  end
+
+  def not_sulfuras_item?
+    !@item.name.include?("Sulfuras")
   end
 
 end
