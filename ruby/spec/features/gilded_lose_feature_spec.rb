@@ -1,5 +1,6 @@
 require 'item'
 require 'gilded_rose'
+# require 'gilded_rose_before_refactor'
 
 describe GildedRose, "features" do
 
